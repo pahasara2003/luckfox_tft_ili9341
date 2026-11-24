@@ -2,6 +2,10 @@
 
 A small C++11 driver for 240 × 320 ILI9341 SPI displays on Linux boards. It uses Linux `spidev` for SPI and the GPIO character-device API for D/C, optional reset, and optional software CS. The drawing API is inspired by [Bodmer's TFT_eSPI](https://github.com/Bodmer/TFT_eSPI), but this is a separate Linux library, not a drop-in Arduino replacement.
 
+![The photo demo running on an ILI9341 display connected to a Luckfox Pico Mini B.](docs/demo.jpg)
+
+**Build guide:** [ILI9341 SPI Display Driver in C++ for the Luckfox Pico Mini B](https://accidentalantenna.pages.dev/projects/luckfox-ili9341-spi-display/) on [AccidentalAntenna](https://accidentalantenna.pages.dev).
+
 Features: RGB565 pixels, lines, rectangles, images, scalable 5 × 7 ASCII text, RAM sprites, four rotations, and pixel readback. Touch is not included.
 
 ## Requirements
