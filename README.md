@@ -242,4 +242,4 @@ make -B bench CXX="$SDK_DIR/tools/linux/toolchain/arm-rockchip830-linux-uclibcgn
 - The initialization matches the `ILI9341_2_DRIVER` sequence used by the author's ESP32 TFT_eSPI setup. Other ILI9341 modules may need a different initialization or color-order setting.
 - Display content and GPIO output state may be lost when the program exits unless reset/backlight are held appropriately.
 
-The 5 × 7 font data comes from Adafruit GFX; see [FONT_LICENSE.txt](FONT_LICENSE.txt). This repository does not yet include a license for the library source itself; choose one before publishing if you want to allow others to reuse it.
+The 5 × 7 font data comes from Adafruit GFX; see [FONT_LICENSE.txt](FONT_LICENSE.txt). The library source is released under the [MIT License](LICENSE).
