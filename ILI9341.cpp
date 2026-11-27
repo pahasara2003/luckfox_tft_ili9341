@@ -187,19 +187,17 @@ void ILI9341::pushImage(int32_t x, int32_t y, int32_t w, int32_t h, const uint16
     window(left, top, uint16_t(x2 - left), uint16_t(y2 - top));
     gpio(dc_, 1);
     if (cs_ >= 0) gpio(cs_, 0);
+    // The panel fills the window row by row, so pack pixels across rows into full 4 KB writes:
+    // one SPI transfer per row (640 bytes at 320 wide) spends most of the frame on per-transfer overhead.
     uint8_t buffer[4096];
-    for (int32_t row = top; row < y2; ++row) {
-        int32_t col = left;
-        while (col < x2) {
-            int32_t n = std::min<int64_t>(x2 - col, sizeof(buffer) / 2);
-            for (int32_t i = 0; i < n; ++i) {
-                uint16_t c = pixels[size_t(row - y) * w + (col + i - x)];
-                buffer[2 * i] = c >> 8; buffer[2 * i + 1] = c;
-            }
-            write_all(spi_, buffer, size_t(n) * 2);
-            col += n;
+    size_t n = 0;
+    for (int32_t row = top; row < y2; ++row)
+        for (int32_t col = left; col < x2; ++col) {
+            uint16_t c = pixels[size_t(row - y) * w + (col - x)];
+            buffer[n++] = c >> 8; buffer[n++] = c;
+            if (n == sizeof(buffer)) { write_all(spi_, buffer, n); n = 0; }
         }
-    }
+    if (n) write_all(spi_, buffer, n);
     if (cs_ >= 0) gpio(cs_, 1);
 }
 
